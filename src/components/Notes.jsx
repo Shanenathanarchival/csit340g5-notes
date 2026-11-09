@@ -29,7 +29,11 @@ function Notes() {
         setNotes([...notes, newNote])
         setForm({ title: '', body: '' })
     }
-    
+
+    function handleDelete(id) {
+        const updatedNotes = notes.filter((note) => note.id !== id)
+        setNotes(updatedNotes)
+    }
 
   return (
     <div className="grid min-h-screen grid-cols-[420px_1fr]">
@@ -85,6 +89,7 @@ function Notes() {
                             />
                             <button
                                 type="button"
+                                onClick={() => handleDelete(note.id)}
                                 className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
                             >
                                 x
