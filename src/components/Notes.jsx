@@ -29,14 +29,13 @@ function Notes() {
     })
 
     const [search, setSearch] = useState('')
-    // useEffect(() => {
-    //     const saved = localStorage.getItem('notes')
-    //     if (saved) setNotes(JSON.parse(saved))
-    // }, [])
 
     useEffect(() => {
-        localStorage.setItem('notes', JSON.stringify(notes))
-    }, [notes])
+        const id = setTimeout(() => {
+            localStorage.setItem('notes', JSON.stringify(notes))
+        }, 1000)
+        return () => clearTimeout(id)
+    }, [form])
 
     const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(search.toLowerCase()))
 
