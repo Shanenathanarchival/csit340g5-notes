@@ -10,8 +10,8 @@ function NoteCard({ title, body }) {
       <h3
         className={
           largeText
-            ? 'pr-8 text-[28px] font-normal break-words'
-            : 'pr-8 text-[22px] font-normal break-words'
+            ? 'pr-8 text-[28px] font-normal wrap-break-word'
+            : 'pr-8 text-[22px] font-normal wrap-break-word'
         }
       >
         {title}
@@ -21,8 +21,8 @@ function NoteCard({ title, body }) {
         <p
           className={
             largeText
-              ? 'mt-3 text-[21px] break-words whitespace-pre-wrap text-[#4d4d4d]'
-              : 'mt-3 text-[17px] break-words whitespace-pre-wrap text-[#4d4d4d]'
+              ? 'mt-3 text-[21px] wrap-break-word whitespace-pre-wrap text-[#4d4d4d]'
+              : 'mt-3 text-[17px] wrap-break-word whitespace-pre-wrap text-[#4d4d4d]'
           }
         >
           {body}
