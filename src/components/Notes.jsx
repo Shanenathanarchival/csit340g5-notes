@@ -14,17 +14,28 @@ const startingNotes = [
   },
 ]
 
+const emptyForm = {
+  title: '',
+  body: '',
+}
+
 function Notes() {
     // const [notes, setNotes] = useState([
     // ])
     const [notes, setNotes] = useState(() => {
         const saved = localStorage.getItem('notes')
-        return saved ? JSON.parse(saved) : startingNotes
+        if (!saved) return startingNotes
+        try {
+            const parsed = JSON.parse(saved)
+            return Array.isArray(parsed) ? parsed : startingNotes
+        } catch {
+            return startingNotes
+        }
     })
 
-    const [form, setForm] = useState({
-        title: '',
-        body: ''
+    const [form, setForm] = useState(() => {
+        const savedDraft = localStorage.getItem('draft')
+        return savedDraft ? JSON.parse(savedDraft) : emptyForm
     })
 
     const [search, setSearch] = useState('')
@@ -33,7 +44,14 @@ function Notes() {
     useEffect(() => {
         const id = setTimeout(() => {
             localStorage.setItem('notes', JSON.stringify(notes))
-        }, 1000)
+        }, 700)
+        return () => clearTimeout(id)
+    }, [notes])
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            localStorage.setItem('draft', JSON.stringify(form))
+        }, 700)
         return () => clearTimeout(id)
     }, [form])
 
@@ -53,7 +71,7 @@ function Notes() {
         }
         const newNote = { id: crypto.randomUUID(), title: form.title, body: trimmed }
         setNotes([...notes, newNote])
-        setForm({ title: '', body: '' })
+        setForm({ ...emptyForm })
         titleRef.current.focus()
     }
 
